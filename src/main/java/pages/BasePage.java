@@ -28,17 +28,4 @@ public class BasePage {
         element.click();
     }
 
-    public void sendKeys(WebElement element, CharSequence data) {
-        WebDriverWait wait = new WebDriverWait(driver,25);
-        wait.until(ExpectedConditions.visibilityOf(element));
-        element.sendKeys(data);
-    }
-
-    public void selectInTable(List<WebElement> list, int index){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.visibilityOfAllElements(list));
-        wait.until(ExpectedConditions.elementToBeClickable(list.get(index-1)));
-        clickButton(list.get(index-1));
-    }
-
 }

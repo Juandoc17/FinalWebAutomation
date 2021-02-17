@@ -51,7 +51,14 @@ public class SearchReturnPage extends BasePage{
         wait.until(ExpectedConditions.elementToBeClickable(thirdResult));
         clickButton(selectButtons.get(index-1));
         //clickButton(firstResult);
+        //clickButton(confirmFlight);
+    }
+
+    public SearchReturnPage confirmFlight(){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.elementToBeClickable(confirmFlight));
         clickButton(confirmFlight);
+        return new SearchReturnPage(driver);
     }
 
 

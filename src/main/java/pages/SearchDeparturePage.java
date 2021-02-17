@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchDeparturePage extends BasePage{
@@ -55,7 +57,7 @@ public class SearchDeparturePage extends BasePage{
 
     @FindAll({@FindBy(css = "span[data-test-id=\"duration\"]"),
             @FindBy(css = "div[class=\"uitk-layout-grid-item uitk-layout-grid-item-columnspan-medium-5 uitk-layout-grid-item-columnspan-large-6\"]")})
-    private List<WebElement> flightDuration;
+    private List<WebElement> flightDurationT;
 
     @FindAll({@FindBy(css = "div[data-test-id=\"show-details-link\"]"),
     @FindBy(id = "basic-economy-tray-content-1")})
@@ -65,10 +67,15 @@ public class SearchDeparturePage extends BasePage{
             @FindBy(how = How.CSS, using= "#flightModuleList>li:first-child [data-test-id='select-button']:first-child")})
     private WebElement firstResultT;
 
-    @FindAll({@FindBy(xpath = "//*[@id=\"flightModuleList\"]/li[1]"),
+    @FindAll({@FindBy(css = "#flightModuleList>li:first-child [data-test-id='select-button']:first-child"),
             @FindBy(css = "#flightModuleList>li:first-child button"),
-            @FindBy(css = "#flightModuleList>li:first-child [data-test-id='select-button']:first-child")})
+            @FindBy(xpath = "//*[@id=\"flightModuleList\"]/li[1]")})
     private WebElement firstResult;
+
+
+    @FindAll({@FindBy(css = "#flightModuleList>li [data-test-id='duration']"),
+            @FindBy(css = "#flightModuleList>li [data-test-id='journey-duration']")})
+    private List<WebElement> flightDuration;
 
     /*
         @FindAll({@FindBy(xpath = "//*[@id=\"flightModuleList\"]/li[1]"),
@@ -146,24 +153,29 @@ public class SearchDeparturePage extends BasePage{
         wait.until(ExpectedConditions.visibilityOf(firstResult));
         wait.until(ExpectedConditions.elementToBeClickable(firstResult));
     }
-    public void checkShortestOrganization(){
-        String noLetters;
-        String noLettersNext;
-        String noLetters2;
-        for (int i = 0; i < flightDuration.size()-1; i++) {
 
-            System.out.println(flightDuration.get(i).getText());
-            noLetters = flightDuration.get(i).getText().substring(0,1);
-            System.out.println(noLetters);
-            noLettersNext = flightDuration.get(i+1).getText().substring(0,1);
-            System.out.println(noLetters);
-            noLetters2 = flightDuration.get(i).getText().substring(3,4);
-            System.out.println(noLetters2);
-            System.out.println("-------------------------------");
-            if(Integer.parseInt(noLetters)>Integer.parseInt(noLettersNext)){
 
-            }
+    public boolean checkListOrder() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfAllElements(selectButtons));
+        wait.until(ExpectedConditions.visibilityOfAllElements(flightDuration));
+        List<Integer> timeNoLetters = new ArrayList<>();
+        for(int i=0; i<flightDuration.size();i++){
+            int time;
+            String fixHour = flightDuration.get(i).getText();
+            fixHour=fixHour.replace("h","");
+            fixHour=fixHour.replace("m","");
+            String[] arrOfStr = fixHour.split(" ");
+            String hours = arrOfStr[0];
+            String minutes = arrOfStr[1];
+            time = (Integer.parseInt(hours)*60 +Integer.parseInt(minutes));
+            timeNoLetters.add(time);
         }
+
+        for(int i=1; i<flightDuration.size();i++){
+            if (timeNoLetters.get(i) < timeNoLetters.get(i-1)) return false;
+        }
+        return true;
     }
 
     public void waitForFlightsOptions(){
@@ -184,6 +196,7 @@ public class SearchDeparturePage extends BasePage{
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOfAllElements(selectButtons));
         wait.until(ExpectedConditions.elementToBeClickable(firstResult));
+        wait.until(ExpectedConditions.elementToBeClickable(selectButtons.get(index-1)));
         clickButton(selectButtons.get(index-1));
         //clickButton(firstResult);
     }
