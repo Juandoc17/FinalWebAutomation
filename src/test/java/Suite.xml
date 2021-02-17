@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Espn Suite">
+    <parameter name="browser" value="chrome"/>
+    <test name="Login Test">
+        <classes>
+            <class name="login.LoginTest"></class>
+        </classes>
+    </test>
+    <test name="Logout Test">
+        <classes>
+            <class name="logout.LogoutTest"></class>
+        </classes>
+    </test>
+    <test name="SingUp Account Test">
+        <classes>
+            <class name="singup.SingupTest"></class>
+        </classes>
+    </test>
+    <test name="Cancel Account Test">
+        <classes>
+            <class name="delete.DeleteTest"></class>
+        </classes>
+    </test>
+</suite>
