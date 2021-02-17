@@ -6,6 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class BasePage {
@@ -31,6 +32,13 @@ public class BasePage {
         WebDriverWait wait = new WebDriverWait(driver,25);
         wait.until(ExpectedConditions.visibilityOf(element));
         element.sendKeys(data);
+    }
+
+    public void selectInTable(List<WebElement> list, int index){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfAllElements(list));
+        wait.until(ExpectedConditions.elementToBeClickable(list.get(index-1)));
+        clickButton(list.get(index-1));
     }
 
 }

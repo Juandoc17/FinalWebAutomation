@@ -22,10 +22,13 @@ public class SetTripTest extends BaseTest {
         assertTrue(searchDeparturePage.checkFlightDuration(), "Elements not found");
         searchDeparturePage.sortByShortestDuration();
         //assertTrue(searchPage.checkShortestOrganization(), "Elements not organized");
-        searchDeparturePage.clickFirstOption();
+        searchDeparturePage.waitForFlightsOptions();
+        searchDeparturePage.clickOption(1);
+        //searchDeparturePage.clickFirstOption();
         assertTrue(searchDeparturePage.checkDetailAndBaggage(), "Elements not found");
         SearchReturnPage searchReturnPage = searchDeparturePage.confirmFlight();
-        searchReturnPage.clickThirdFLight();
+        searchReturnPage.clickOption(3);
+        //searchReturnPage.clickThirdFLight();
         TripDetailsPage tripDetailsPage = searchReturnPage.clickNoThanks();
         assertTrue(tripDetailsPage.getTotalPrice(), "Elements not found");
         assertTrue(tripDetailsPage.getGuaranteeText(), "Elements not found");

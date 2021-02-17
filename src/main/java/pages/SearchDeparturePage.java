@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -48,7 +49,7 @@ public class SearchDeparturePage extends BasePage{
             @FindBy(css = "button[data-test-id=\"select-link\"]")})
     private List<WebElement> flightBoxes;
 
-    @FindAll({@FindBy(css = "button[data-test-id=\"select-button\"]"),
+        @FindAll({@FindBy(css = "button[data-test-id=\"select-button\"]"),
             @FindBy(css = "button[data-test-id=\"select-link\"]")})
     private List<WebElement> selectButtons;
 
@@ -60,15 +61,29 @@ public class SearchDeparturePage extends BasePage{
     @FindBy(id = "basic-economy-tray-content-1")})
     private WebElement detailsAndBaggage;
 
+    @FindAll({@FindBy( how = How.CSS, using= "#flightModuleList>li:first-child button"),
+            @FindBy(how = How.CSS, using= "#flightModuleList>li:first-child [data-test-id='select-button']:first-child")})
+    private WebElement firstResultT;
+
+    @FindAll({@FindBy(xpath = "//*[@id=\"flightModuleList\"]/li[1]"),
+            @FindBy(css = "#flightModuleList>li:first-child button"),
+            @FindBy(css = "#flightModuleList>li:first-child [data-test-id='select-button']:first-child")})
+    private WebElement firstResult;
 
     /*
-    @FindAll({@FindBy(css = "//*[@id=\"flightModuleList\"]/li[1]"),
+        @FindAll({@FindBy(xpath = "//*[@id=\"flightModuleList\"]/li[1]"),
+            @FindBy(xpath = "//*[@id=\"flightModuleList\"]/li[1]//div[@class=\"uitk-col standard-col-l-margin all-col-shrink display-larger-screens-only\"]/button")})
+    private WebElement firstResult;
+
+    @FindAll({@FindBy( how = How.CSS, using= "#flightModuleList>li:first-child button"),
+            @FindBy(how = How.CSS, using= "#flightModuleList>li:first-child [data-test-id='select-button']:first-child")})
+    private WebElement firstResultT;
+
+        @FindAll({@FindBy(id = "AQrlAgrPAnY1LXNvcy1hNGE1ODhiYjNkMGU0YmYzOWI3ZWI5YTIyNWU4YTIzOC0xLTEtc3QtdjUtc29zLTQ3NTBlYTlkNjRmNjQxMmVhZDM4NTgxMjU4MTNiODE0LTMxLTJ-Mi5TfkFRb0VDSUh4QkJJSENOUUVFQWNZR3lBSElBRWdEQ0FOSUFrb0FsSUUyUFFCQUZnQ2NBQndBQX5BUW9vQ2lZSTFZSUJFZ1F5TVRZNEdJdVFBU0NMdUFFbzdJenFBVENwamVvQk9FNUFBRmdCYWdKQ1JSSUtDQUVRQVJnQktnSlZRUmdCSWdRSUFSQUJLQUlvQXlnRU1BSS5BUW9qQ2lFSXhuSVNCREl4TmpRWWk3Z0JJSXVRQVNqaDMtb0JNTERnNmdFNFMwQUFXQUVTQ2dnQ0VBRVlBaW9DUmprWUFTSUVDQUVRQVNnQ0tBTW9CREFDEY_C9ShcD09AIgEBKgUSAwoBMRI_ChYKCjIwMjEtMDQtMTcSA0xBUxoDTEFYChYKCjIwMjEtMDQtMjQSA0xBWBoDTEFTEgcSBUNPQUNIGgIQASACGgoIARIGGgAiAggC"),
             @FindBy(css = "//*[@id=\"flightModuleList\"]/li[1]//div[@class=\"uitk-col standard-col-l-margin all-col-shrink display-larger-screens-only\"]/button")})
     private WebElement firstResult;
      */
-    @FindAll({@FindBy(id = "AQrlAgrPAnY1LXNvcy1hNGE1ODhiYjNkMGU0YmYzOWI3ZWI5YTIyNWU4YTIzOC0xLTEtc3QtdjUtc29zLTQ3NTBlYTlkNjRmNjQxMmVhZDM4NTgxMjU4MTNiODE0LTMxLTJ-Mi5TfkFRb0VDSUh4QkJJSENOUUVFQWNZR3lBSElBRWdEQ0FOSUFrb0FsSUUyUFFCQUZnQ2NBQndBQX5BUW9vQ2lZSTFZSUJFZ1F5TVRZNEdJdVFBU0NMdUFFbzdJenFBVENwamVvQk9FNUFBRmdCYWdKQ1JSSUtDQUVRQVJnQktnSlZRUmdCSWdRSUFSQUJLQUlvQXlnRU1BSS5BUW9qQ2lFSXhuSVNCREl4TmpRWWk3Z0JJSXVRQVNqaDMtb0JNTERnNmdFNFMwQUFXQUVTQ2dnQ0VBRVlBaW9DUmprWUFTSUVDQUVRQVNnQ0tBTW9CREFDEY_C9ShcD09AIgEBKgUSAwoBMRI_ChYKCjIwMjEtMDQtMTcSA0xBUxoDTEFYChYKCjIwMjEtMDQtMjQSA0xBWBoDTEFTEgcSBUNPQUNIGgIQASACGgoIARIGGgAiAggC"),
-            @FindBy(css = "//*[@id=\"flightModuleList\"]/li[1]//div[@class=\"uitk-col standard-col-l-margin all-col-shrink display-larger-screens-only\"]/button")})
-    private WebElement firstResult;
+
 
     @FindAll({
             @FindBy(css = "#basic-economy-tray-content-1 button[data-test-id=\"select-button-1\"]"),
@@ -130,7 +145,6 @@ public class SearchDeparturePage extends BasePage{
         sortSelect.click();
         wait.until(ExpectedConditions.visibilityOf(firstResult));
         wait.until(ExpectedConditions.elementToBeClickable(firstResult));
-        System.out.println("Boton!!" + firstResult.getText());
     }
     public void checkShortestOrganization(){
         String noLetters;
@@ -152,11 +166,28 @@ public class SearchDeparturePage extends BasePage{
         }
     }
 
+    public void waitForFlightsOptions(){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfAllElements(selectButtons));
+        wait.until(ExpectedConditions.elementToBeClickable(firstResult));
+    }
+
     public void clickFirstOption(){
         WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfAllElements(selectButtons));
         wait.until(ExpectedConditions.elementToBeClickable(firstResult));
-        clickButton(firstResult);
+        clickButton(selectButtons.get(0));
+        //clickButton(firstResult);
     }
+
+    public void clickOption(int index){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfAllElements(selectButtons));
+        wait.until(ExpectedConditions.elementToBeClickable(firstResult));
+        clickButton(selectButtons.get(index-1));
+        //clickButton(firstResult);
+    }
+
 
     public SearchReturnPage confirmFlight(){
         WebDriverWait wait = new WebDriverWait(driver, 30);
